@@ -1,0 +1,28 @@
+{
+    "version": "2.0",
+    "routeKey": "POST /linear",
+    "rawPath": "/linear",
+    "rawQueryString": "",
+    "headers": {
+        "content-type": "application/json"
+    },
+    "requestContext": {
+        "accountId": "123456789012",
+        "apiId": "api-id",
+        "domainName": "localhost",
+        "domainPrefix": "local",
+        "http": {
+            "method": "POST",
+            "path": "/linear",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "127.0.0.1",
+            "userAgent": "Custom User Agent"
+        },
+        "requestId": "id",
+        "routeKey": "POST /linear",
+        "stage": "$default",
+        "time": "12/Mar/2020:19:30:02 +0000",
+        "timeEpoch": 1584034202183
+    },
+    "body": "{\"x\": [1, 2, 3], \"y\": [2, 4, 5]}"
+}

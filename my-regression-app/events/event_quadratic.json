@@ -1,0 +1,28 @@
+{
+    "version": "2.0",
+    "routeKey": "POST /quadratic",
+    "rawPath": "/quadratic",
+    "rawQueryString": "",
+    "headers": {
+        "content-type": "application/json"
+    },
+    "requestContext": {
+        "accountId": "123456789012",
+        "apiId": "api-id",
+        "domainName": "localhost",
+        "domainPrefix": "local",
+        "http": {
+            "method": "POST",
+            "path": "/quadratic",
+            "protocol": "HTTP/1.1",
+            "sourceIp": "127.0.0.1",
+            "userAgent": "Custom User Agent"
+        },
+        "requestId": "id",
+        "routeKey": "POST /quadratic",
+        "stage": "$default",
+        "time": "12/Mar/2020:19:30:02 +0000",
+        "timeEpoch": 1584034202183
+    },
+    "body": "{\"x\": [1, 2, 3, 4, 5], \"y\": [1, 4, 9, 16, 25]}"
+}

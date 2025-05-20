@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: A serverless application for polynomial regression.
+
+Globals:
+  Function:
+    Runtime: python3.9
+    Timeout: 30  # Increased timeout
+    MemorySize: 256 # Increased memory
+
+Resources:
+  PythonDependencies:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: ./layers/python/
+      CompatibleRuntimes:
+        - python3.9
+    DeletionPolicy: Delete
+    Metadata:
+      BuildMethod: python3.9
+  
+  LinearFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: lambda_function.handler
+      Layers:
+        - !Ref PythonDependencies
+      Events:
+        LinearEndpoint:
+          Type: HttpApi  # Use HttpApi
+          Properties:
+            Path: /linear
+            Method: POST
+    Metadata:
+      BuildMethod: python3.9
+
+  QuadraticFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: lambda_function.handler
+      Layers:
+        - !Ref PythonDependencies
+      Events:
+        QuadraticEndpoint:
+          Type: HttpApi # Use HttpApi
+          Properties:
+            Path: /quadratic
+            Method: POST
+    Metadata:
+      BuildMethod: python3.9
