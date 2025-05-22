@@ -22,7 +22,7 @@ Resources:
   LinearFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./
+      CodeUri: code/
       Handler: lambda_function.handler
       Layers:
         - !Ref PythonDependencies
@@ -38,7 +38,7 @@ Resources:
   QuadraticFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ./
+      CodeUri: code/
       Handler: lambda_function.handler
       Layers:
         - !Ref PythonDependencies
