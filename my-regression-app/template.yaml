@@ -2,23 +2,42 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: A serverless application for polynomial regression.
 
+Parameters:
+  PythonRuntime:
+    Type: String
+    Default: python3.9
+    AllowedValues:
+      - python3.9
+      - python3.10
+      - python3.11
+      - python3.12
+    Description: Python runtime version for Lambda functions and layers
+
 Globals:
   Function:
-    Runtime: python3.9
-    Timeout: 30  # Increased timeout
-    MemorySize: 256 # Increased memory
+    Runtime: !Ref PythonRuntime
+    Timeout: 30
+    MemorySize: 256
 
 Resources:
+  RegressionAPI:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Name: MyPolynomialApi
+      CorsConfiguration:
+        AllowMethods: ['POST']
+        AllowOrigins: ['*']
+
   PythonDependencies:
     Type: AWS::Serverless::LayerVersion
     Properties:
       ContentUri: ./layers/python/
       CompatibleRuntimes:
-        - python3.9
+        - !Ref PythonRuntime
     DeletionPolicy: Delete
     Metadata:
-      BuildMethod: python3.9
-  
+      BuildMethod: !Ref PythonRuntime
+
   LinearFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -28,12 +47,13 @@ Resources:
         - !Ref PythonDependencies
       Events:
         LinearEndpoint:
-          Type: HttpApi  # Use HttpApi
+          Type: HttpApi
           Properties:
             Path: /linear
             Method: POST
+            ApiId: !Ref RegressionAPI
     Metadata:
-      BuildMethod: python3.9
+      BuildMethod: !Ref PythonRuntime
 
   QuadraticFunction:
     Type: AWS::Serverless::Function
@@ -44,9 +64,10 @@ Resources:
         - !Ref PythonDependencies
       Events:
         QuadraticEndpoint:
-          Type: HttpApi # Use HttpApi
+          Type: HttpApi
           Properties:
             Path: /quadratic
             Method: POST
+            ApiId: !Ref RegressionAPI
     Metadata:
-      BuildMethod: python3.9
+      BuildMethod: !Ref PythonRuntime
